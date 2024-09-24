@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file://lsbk-fs01/25ASS1-18$/Downloads/abschreibung_lo%CC%88sung.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linearer Abschreibungsrechner</title>
+    <link rel="stylesheet" href="./Linearer Abschreibungsrechner_files/bootstrap.min.css">
+</head>
+<li><a href="./index.html">Home</a></li>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Lineare Abschreibungsrechner</h1>
+        <form>
+            <div class="form-group">
+                <label for="idAnschaffungswert">Anschaffungswert:</label>
+                <input id="idAnschaffungswert" class="form-control" type="number" value="150000" min="1">
+                <small class="form-text text-muted">in Euro</small>
+            </div>
+            <div class="form-group">
+                <label for="idNutzungsdauer">Nutzungsdauer:</label>
+                <input id="idNutzungsdauer" class="form-control" type="number" value="6" min="1">
+                <small class="form-text text-muted">in Jahren</small>
+            </div>
+            <button class="btn btn-primary" type="button" onclick="fBerechne()">Berechnen</button>
+        </form>
+        <br>
+        <div id="idAusgabe"><table class="table table-bordered"><thead><tr><th>Nutzungsjahr</th><th>Abschreibungswert</th><th>Restwert</th></tr></thead><tbody><tr><td>1</td><td>25000.00 €</td><td>125000.00 €</td></tr><tr><td>2</td><td>25000.00 €</td><td>100000.00 €</td></tr><tr><td>3</td><td>25000.00 €</td><td>75000.00 €</td></tr><tr><td>4</td><td>25000.00 €</td><td>50000.00 €</td></tr><tr><td>5</td><td>25000.00 €</td><td>25000.00 €</td></tr><tr><td>6</td><td>25000.00 €</td><td>0.00 €</td></tr></tbody></table></div>
+    </div>
+    <script>
+        function fBerechne() {
+            var anschaffungswert = parseFloat(document.getElementById("idAnschaffungswert").value);
+            var nutzungsdauer = parseInt(document.getElementById("idNutzungsdauer").value);
+
+            var abschreibungswert = anschaffungswert / nutzungsdauer;
+            var restwert = anschaffungswert;
+
+            var vAusgabe = '<table class="table table-bordered"><thead><tr><th>Nutzungsjahr</th><th>Abschreibungswert</th><th>Restwert</th></tr></thead><tbody>';
+
+            for (var jahr = 1; jahr <= nutzungsdauer; jahr++) {
+                restwert -= abschreibungswert;
+                vAusgabe += '<tr><td>' + jahr + '</td><td>' + abschreibungswert.toFixed(2) + ' €</td><td>' + restwert.toFixed(2) + ' €</td></tr>';
+            }
+
+            vAusgabe += '</tbody></table>';
+            document.getElementById("idAusgabe").innerHTML = vAusgabe;
+        }
+
+
+    </script>
+
+
+</body></html>

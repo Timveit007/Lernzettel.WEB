@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentenrechner: Vorschüssig und Nachschüssig</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<li><a href="./index.html">Home</a></li>
+<body>
+    <h1>Rentenrechner (Vorschüssig und Nachschüssig)</h1>
+
+    <label for="rente">Jährliche Rente:</label>
+    <input type="number" id="rente" value="500"><br><br>
+
+    <label for="zins">Jährlicher Zinssatz (%):</label>
+    <input type="number" id="zins" value="2"><br><br>
+
+    <label for="laufzeit">Laufzeit (Jahre):</label>
+    <input type="number" id="laufzeit" value="5"><br><br>
+
+    <label for="typ">Rentenart:</label>
+    <select id="typ">
+        <option value="nachschuessig">Nachschüssig</option>
+        <option value="vorschuessig">Vorschüssig</option>
+    </select><br><br>
+
+    <button onclick="berechneRente()">Berechnen</button>
+
+    <div id="ausgabe"></div>
+    
+    <script>
+        function berechneRente() {
+            var rente = parseFloat(document.getElementById('rente').value);
+            var zins = parseFloat(document.getElementById('zins').value) / 100;
+            var laufzeit = parseInt(document.getElementById('laufzeit').value);
+            var typ = document.getElementById('typ').value;
+
+            var endwert = 0;
+            var ausgabe = '<table><thead><tr><th>Jahr</th><th>Rentenbetrag</th><th>Zinsen</th><th>Endwert</th></tr></thead><tbody>';
+
+            for (var jahr = 1; jahr <= laufzeit; jahr++) {
+                var zinsen = 0;
+
+                if (typ === 'vorschuessig') {
+                    endwert += rente;
+                    zinsen = endwert * zins;
+                } else {
+                    zinsen = endwert * zins;
+                    endwert += rente;
+                    
+                }
+
+                endwert += zinsen;
+
+                ausgabe += '<tr><td>' + jahr + '</td><td>' + rente.toFixed(2) + ' €</td><td>' + zinsen.toFixed(2) + ' €</td><td>' + endwert.toFixed(2) + ' €</td></tr>';
+            }
+
+            ausgabe += '</tbody></table>';
+            document.getElementById('ausgabe').innerHTML = ausgabe;
+        }
+    </script>
+</body>
+</html> 
